@@ -1,23 +1,28 @@
-const getRandomNumbers = (cant) => {
+const getRandomNumbers = () => {
     let numbers = [];
-    for (let i=0; i<cant; i++){
-        let rndmNo = Math.floor(Math.random() * (1000 - 1 + 1))
+    const cantDef = 2000;
+    for (let i=0; i<cantDef; i++){
+        let rndmNo = Math.floor(Math.random() * (1000 - 1) + 1);
      
-        const found = !!numbers.find(numero => {
-            return numero.number === rndmNo;
+        const foundNumber = numbers.find(item => {
+            return item.number === rndmNo;
         })
 
-        if(!found){
-            numbers.push({"number": rndmNo, "cantidad": 1})
-        } else{
-            numbers.find(numero => {
-                numero.cantidad = numero.cantidad++;
-            })
+        const foundIndex = numbers.findIndex(item => {
+            return item.number === rndmNo;
+        })
+
+        if(!foundNumber){
+            numbers.push({number: rndmNo, cantidad: 1})
+        } else {
+            let cantidad = numbers[foundIndex].cantidad;
+            numbers[foundIndex].cantidad = cantidad+1;
         }
     }
+    return numbers;
 }
 
-process.on('message', cant => {
-    const numerosRandom = getRandomNumbers(cant);
+process.on('message', msg => {
+    const numerosRandom = getRandomNumbers();
     process.send(numerosRandom);
 })
