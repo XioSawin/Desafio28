@@ -151,19 +151,21 @@ const {fork} = require('child_process');
 app.get('/randoms', (req, res) => {
     const {cant} = req.query;
 
+    const cantDefault = 100000000;
+
     if(!cant) {
-        const randomNumber = fork('./child.js');
-        randomNumber.send(100000000);
-        randomNumber.on('message', random => {
-            res.end(`Números random ${random}`);
+        const randomNumberDef = fork('./child.js');
+        randomNumberDef.send('start');
+        randomNumberDef.on('message', numerosRandom => {
+            res.end(`Numeros random ${JSON.stringify(numerosRandom)}`);
         });
-    } else {
-        const randomNumber = fork('./child.js');
-        randomNumber.send(cant);
-        randomNumber.on('message', random => {
-            res.end(`Números random ${random}`);
-        });
-    }
+    } 
+    
+    const randomNumber = fork('./child.js');
+    randomNumber.send('start');
+    randomNumber.on('message', numerosRandom => {
+        res.end(`Numeros random ${JSON.stringify(numerosRandom)}`);
+    });
 });
 
 /* -------------- DB CONNECTION -------------- */
