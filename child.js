@@ -1,7 +1,7 @@
-const getRandomNumbers = () => {
+const getRandomNumbers = (cant) => {
     let numbers = [];
-    const cantDef = 2000;
-    for (let i=0; i<cantDef; i++){
+  
+    for (let i=0; i<cant; i++){
         let rndmNo = Math.floor(Math.random() * (1000 - 1) + 1);
      
         const foundNumber = numbers.find(item => {
@@ -19,10 +19,18 @@ const getRandomNumbers = () => {
             numbers[foundIndex].cantidad = cantidad+1;
         }
     }
+
     return numbers;
 }
 
-process.on('message', msg => {
-    const numerosRandom = getRandomNumbers();
+process.on('message', req => {
+    const {cant} = req;
+
+    if(!cant) {
+        let numerosRandom = getRandomNumbers(100000000);
+        process.send(numerosRandom);
+    }
+
+    let numerosRandom = getRandomNumbers(cant);
     process.send(numerosRandom);
 })
