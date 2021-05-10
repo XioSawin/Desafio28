@@ -10,21 +10,10 @@ const User = require('./db/model');
 
 /* -------------- Datos por CL -------------- */
 
-const portCL = process.argv[2];
-const clientIDCL = process.argv[3];
-const secretCL = process.argv[4];
+const portCL = process.argv[2] || 3040;
+const clientIDCL = process.argv[3] ||' 1088323731578912';
+const secretCL = process.argv[4] || 'a543fd2feda2975c012023c86d34b8b3';
 
-if(!portCL){
-    portCL = 3040
-};
-
-if(!clientIDCL) {
-    clientIDCL = '1088323731578912';
-};
-
-if(!secretCL) {
-    secretCL = 'a543fd2feda2975c012023c86d34b8b3';
-}
 
 /* -------------- PASSPORT w FACEBOOK -------------- */
 const passport = require('passport');
@@ -168,5 +157,5 @@ app.listen(portCL, ()=>{
         }
     )
         .then( () => console.log('Base de datos conectada') )
-        .catch( (err) => console.log(error) );
+        .catch( (err) => console.log(err) );
 })
