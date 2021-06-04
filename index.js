@@ -12,7 +12,7 @@ const User = require('./db/model');
 
 const portCL = process.argv[2] || 3040;
 const clientIDCL = process.argv[3] ||' 1088323731578912';
-const secretCL = process.argv[4] || 'a543fd2feda2975c012023c86d34b8b3';
+const secretCL = process.argv[4] || '00000000000000000';
 
 
 /* -------------- PASSPORT w FACEBOOK -------------- */
